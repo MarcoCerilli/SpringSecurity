@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Recap Acquisto</title>
+<!-- Materialize CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<style>
+    body {
+        font-family: 'Roboto', Arial, sans-serif;
+        background-color:  #ee6e73; /* Sfondo blu chiarissimo */
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        margin-top: 40px;
+        padding: 25px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+        color: #1a5276; /* Blu scuro */
+        border-bottom: 3px solid #3498db; /* Linea blu */
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-size: 2rem;
+    }
+
+    .highlight {
+        color: #2874a6;
+        font-weight: bold;
+    }
+
+    table.striped tbody tr:nth-child(odd) {
+        background-color: #f9fcff; /* Alternanza righe */
+    }
+
+    table img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    .btn-custom {
+        background-color: #3498db !important;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #2874a6 !important;
+    }
+
+    @media (max-width: 768px) {
+        table img {
+            max-width: 60px;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="container z-depth-2">
+    <h1 class="center-align">Recap dell'acquisto</h1>
+    <table class="striped centered responsive-table">
+        <thead>
+            <tr>
+                <th>Nome prodotto</th>
+                <th>Marca</th>
+                <th>Immagine</th>
+                <th>Qnt</th>
+                <th>SubTotale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="prodotto : ${lista}">
+                <td th:text="${prodotto.nome}"></td>
+                <td th:text="${prodotto.marca}"></td>
+                <td><img th:src="${prodotto.url}" alt="Immagine prodotto"></td>
+                <td th:text="${prodotto.pezzi}"></td>
+                <td>€ <span th:text="${prodotto.prezzo}"></span></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="right-align highlight">Totale:</td>
+                <td class="highlight">€ <span th:text="${somma}"></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <h3 class="center-align">La somma da pagare è: <span class="highlight">€<span th:text="${somma}"></span></span></h3>
+    <div class="center-align">
+        <a th:href="${urlRicevuta}" class="btn btn-custom">Visualizza Ricevuta</a>
+        <br><br>
+        <a href="/" class="waves-effect waves-light btn-flat">← Torna ad aggiungere prodotti</a>
+    </div>
+</div>
+</body>
+</html>

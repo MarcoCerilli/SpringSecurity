@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+        /* Imposta una dimensione standard per tutte le immagini */
+        .card-image img {
+            width: 100%; /* Rende l'immagine adattabile alla larghezza del contenitore */
+            height: 200px; /* Altezza uniforme */
+            object-fit: cover; /* Assicura che l'immagine riempia il contenitore senza distorsioni */
+            border-radius: 8px; /* Smussa leggermente gli angoli */
+        }
+    
+        /* Spaziatura tra le card */
+        .card {
+            margin: 10px;
+        }
+    
+        /* Migliora l'aspetto del titolo */
+        .card-title {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    
+        /* Migliora lo stile della sezione rivelata */
+        .card-reveal {
+            background-color: #f4f4f4;
+        }
+    
+        /* Per il layout responsivo delle card */
+        #cont {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Spaziatura tra le card */
+        }
+    
+        /* Regola la dimensione delle card a seconda della larghezza dello schermo */
+        .card.col.s3 {
+            flex: 1 1 calc(25% - 20px); /* Adatta quattro card per riga */
+            max-width: calc(25% - 20px);
+        }
+    
+        @media (max-width: 768px) {
+            .card.col.s3 {
+                flex: 1 1 calc(50% - 20px); /* Due card per riga su schermi medi */
+                max-width: calc(50% - 20px);
+            }
+        }
+    
+        @media (max-width: 480px) {
+            .card.col.s3 {
+                flex: 1 1 calc(100% - 20px); /* Una card per riga su schermi piccoli */
+                max-width: calc(100% - 20px);
+            }
+        }
+    </style>
+        
+    <script>
+        window.onload = gestoreLoad
+        
+        
+        
+        function gestoreLoad() {
+        //let nodoP = document.getElementById("result")
+        //let nodoBtn = document.getElementById("btn")
+      //  nodoBtn.onclick = cerca
+        
+        // Definiamo una funzione asincrona usando la parola chiave async
+        async function fetchData() {
+            // URL dell'endpoint API da cui vogliamo recuperare i dati
+            const apiUrl = 'http://localhost:8080/lista';
+           
+          
+            try {
+              // Utilizziamo await per aspettare che la promessa fetch si risolva
+              const response = await fetch(apiUrl);
+              
+          
+              // Verifichiamo se la risposta è OK (status 200-299)
+              if (!response.ok) {
+                throw new Error(`Errore di rete: ${response.status}`);
+              }
+          
+              // Utilizziamo await per aspettare che la promessa json si risolva
+              const data = await response.json();
+              
+              
+          
+              // Utilizziamo i dati ricevuti dalla risposta
+              console.log('Dati ricevuti:', data);
+              console.log(data[0].nome)
+              
+              let cont = document.getElementById("cont")
+              
+            for (let i = 0; i < data.length; i++) {
+            	let div = document.createElement("div")
+              div.classList= "card col s3"
+              let div1 = document.createElement("div")
+              div1.classList= "card-image waves-effect waves-block waves-light"
+              let img = document.createElement("img")
+              img.src = data[i].url
+              div1.appendChild(img)
+              let div2 = document.createElement("div")
+              div2.classList= "card-content"
+              let span = document.createElement("span")
+              span.classList = "card-title activator grey-text text-darken-4"
+              span.textContent = "Nome: " +data[i].nome
+              div2.appendChild(span)
+              let div3 = document.createElement("div")
+              div3.classList = ("card-reveal")
+              let span1 = document.createElement("span")
+              span1.classList = ("card-title grey-text text-darken-4")
+              span1.textContent = "Marca: " + data[i].marca
+              let p = document.createElement("p")
+              p.textContent = "Prezzo: " +data[i].prezzo
+              div3.appendChild(span1)
+              div3.appendChild(p)
+              div.appendChild(div1)
+              div.appendChild(div2)
+              div.appendChild(div3)
+				 cont.appendChild(div)
+              
+        
+             
+        }
+    
+        
+            } catch (error) {
+              // Gestiamo eventuali errori
+              console.error('Si è verificato un errore durante la richiesta:', error);
+            }
+          }
+          
+          // Chiamare la funzione fetchData
+          fetchData();
+         let nodoDiv = document.getElementById("risult")
+       
+          }
+       
+        
+            </script>
+</head>
+<body>
+    <div class = "container">
+     <div class="row" id = "cont">
+   
+  </div>
+  </div>
+</body>
+</html>

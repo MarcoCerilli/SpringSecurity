@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Store</title>
+<!-- Materialize CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems);
+});
+</script>
+
+<style>
+    body, h1 {
+        font-family: 'Roboto', Arial, sans-serif;
+        background-color:  #ee6e73;
+        margin: 0;
+        padding: 0;
+    }
+     
+    .container {
+        margin-top: 40px;
+        padding: 25px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    h1, h3 {
+        color: white; 
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    h3 {
+        margin-top: 40px;
+        font-size: 1.5rem;
+    }
+
+    table.striped tbody tr:nth-child(odd) {
+        background-color: #f9fcff; /* Alternanza righe */
+    }
+
+    table img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    .btn-custom {
+        background-color: #3498db !important;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #2874a6 !important;
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        table img {
+            max-width: 40px;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="container z-depth-2">
+    <h1> Prodotti </h1>
+    <form action="/buy" method="post">
+        <table class="striped centered responsive-table">
+            <thead>
+                <tr>
+                    <th>Nome prodotto</th>
+                    <th>Marca</th>
+                    <th>Prezzo</th>
+                    <th>Immagine</th>
+                    <th>Seleziona Quantità</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prodotto : ${lista}">
+                    <td th:text="${prodotto.nome}"></td>
+                    <td th:text="${prodotto.marca}"></td>
+                    <td>€ <span th:text="${prodotto.prezzo}"> </span></td>
+                    <td><img th:src="${prodotto.url}" alt="Immagine prodotto"></td>
+                    <td><input type="number" name="selected" value="0" min="0" class="browser-default"></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Inserisci la tua email</h3>
+        <div class="input-field">
+            <input type="email" id="mail" name="mail" required>
+            <label for="mail">Email</label>
+        </div>
+        <div class="input-field">
+            <select id="testToken" name="token" required>
+                <option value="" disabled selected>Scegli un metodo di pagamento</option>
+                <option value="tok_visa">Visa Test Card</option>
+                <option value="tok_mastercard">MasterCard Test Card</option>
+                <option value="tok_amex">American Express Test Card</option>
+            </select>
+            <label for="testToken">Test Token</label>
+        </div>
+        <div class="center-align">
+            <button type="submit" class="btn btn-custom">Compra</button>
+        </div>
+    </form>
+    <div class="center-align">
+        <a href="/home" class="btn-flat waves-effect">← Torna alla Home</a>
+    </div>
+</div>
+</body>
+</html>
